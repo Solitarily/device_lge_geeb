@@ -2,7 +2,7 @@
 TARGET_SCREEN_HEIGHT := 1280
 TARGET_SCREEN_WIDTH := 768
 
-# Inherit some common CM stuff.
+# Inherit some common MK stuff.
 $(call inherit-product, vendor/mk/config/common_full_phone.mk)
 
 # Enhanced NFC

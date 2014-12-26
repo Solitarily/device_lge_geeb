@@ -2,5 +2,13 @@
  {
    "repository": "kernel_msm",
    "target_path": "kernel/lge/msm"
+ },
+ {
+   "repository": "vendor_lge",
+   "target_path": "vendor/lge"
+ },
+ {
+   "repository": "vendor_qcom",
+   "target_path": "vendor/qcom"
  }
 ]
