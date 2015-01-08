@@ -3,6 +3,7 @@ type qmuxd_socket, file_type;
 type sensors_socket, file_type;
 type camera_socket, file_type;
 
+type touchpanel_sysfs, fs_type, sysfs_type;
 type sensors_data_file, file_type, data_file_type;
 
 type kickstart_data_file, file_type, data_file_type;
@@ -23,3 +24,6 @@ type sysfs_rmnet, fs_type, sysfs_type;
 type sysfs_mpdecision, fs_type, sysfs_type;
 
 type wcnss_ctrl, dev_type;
+
+type kcal_dev, file_type;
+type vibe_dev, file_type;

@@ -8,8 +8,11 @@ init_daemon_domain(netmgrd)
 # Starts as (root,radio) changes to (radio,radio)
 allow netmgrd self:capability { setuid setgid net_admin net_raw };
 
+allow netmgrd self:capability { dac_override dac_read_search fsetid };
+
 # Support modprobe??
 dontaudit netmgrd self:capability sys_module;
+allow netmgrd kernel:system module_request;
 
 allow netmgrd self:udp_socket { create ioctl };
 allow netmgrd self:netlink_socket create_socket_perms;
@@ -31,3 +34,5 @@ allow netmgrd shell_exec:file rx_file_perms;
 
 # Runs /system/bin/ip addr flush dev <device> commands.
 allow netmgrd system_file:file rx_file_perms;
+
+allow netmgrd self:process execmem;

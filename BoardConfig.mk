@@ -14,12 +14,15 @@
 # limitations under the License.
 #
 
+TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
 TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := krait
+ARCH_ARM_HAVE_TLS_REGISTER := true
 
 # Krait optimizations
 TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
@@ -28,7 +31,12 @@ TARGET_KRAIT_BIONIC_PLDOFFS := 10
 TARGET_KRAIT_BIONIC_PLDTHRESH := 10
 TARGET_KRAIT_BIONIC_BBTHRESH := 64
 TARGET_KRAIT_BIONIC_PLDSIZE := 64
-TARGET_MPDECISION_BOOST_SOCKET := /dev/socket/mpdecision/touchboost
+
+# Compiler Optimizations
+ARCH_ARM_HIGH_OPTIMIZATION := true
+
+# Enable various prefetch optimizations
+COMMON_GLOBAL_CFLAGS += -D__ARM_USE_PLD -D__ARM_CACHE_LINE_SIZE=64
 
 TARGET_NO_BOOTLOADER := true
 
@@ -41,7 +49,7 @@ BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01600000
 TARGET_KERNEL_SOURCE := kernel/lge/msm
 TARGET_KERNEL_CONFIG := geeb_defconfig
 
-TARGET_OTA_ASSERT_DEVICE := geeb,e970,e971,e973
+TARGET_OTA_ASSERT_DEVICE := geeb,gee_a,e970,gee,geebus,e971,e973,e975,geehrc,geebusc,geeb_att,geeb_att_us,geespr
 
 BOARD_USES_ALSA_AUDIO:= true
 BOARD_USES_LEGACY_ALSA_AUDIO:= false
@@ -132,6 +140,8 @@ BOARD_SEPOLICY_UNION += \
        file_contexts \
        hostapd.te \
        kickstart.te \
+       kcal_dev.te \
+       keystore.te \
        mediaserver.te \
        mpdecision.te \
        netmgrd.te \
@@ -142,10 +152,12 @@ BOARD_SEPOLICY_UNION += \
        rmt.te \
        sensors.te \
        surfaceflinger.te \
+       system_app.te \
        system_server.te \
        tee.te \
        te_macros \
        thermald.te \
+       vibe_dev.te \
        ueventd.te
 
 

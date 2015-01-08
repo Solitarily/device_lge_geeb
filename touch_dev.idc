@@ -30,6 +30,3 @@ touch.pressure.calibration = amplitude
 touch.pressure.scale = 0.0125
 
 touch.orientation.calibration = none
-
-keyboard.layout = keypad_8064
-

@@ -25,6 +25,7 @@ on early-init
 on init
     # See storage config details at http://source.android.com/tech/storage/
     mkdir /mnt/shell/emulated 0700 shell shell
+    mkdir /storage 0550 system sdcard_r
     mkdir /storage/emulated 0555 root root
 
     #External storage directories
@@ -46,6 +47,9 @@ on init
     symlink /storage/emulated/legacy /mnt/sdcard
     symlink /storage/emulated/legacy /storage/sdcard0
     symlink /mnt/shell/emulated/0 /storage/emulated/legacy
+
+    mkdir /sns 0775 system system
+    mkdir /sns/cal 0771 system system
 
     # Setup custom emergency number list based on
     # the MCC. This is needed by RIL.
@@ -423,7 +427,7 @@ service charger /sbin/healthd -c
 service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
     class late_start
     
-service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
+service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
     class late_start
     disabled
 
@@ -431,18 +435,13 @@ service thermald /system/bin/thermald
     class main
     group radio system
 
-service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
-    class main
-    user root
-    group root system
-
 service qcamerasvr /system/bin/mm-qcamera-daemon
     class late_start
     user camera
     group camera system inet input
 
 service wcnss_init /system/bin/sh /system/etc/init.geeb.wifi.sh
-    class late_start
+    class main
     user system
     group system wifi
     seclabel u:r:conn_init:s0
@@ -475,6 +474,10 @@ service qrngd /system/bin/qrngd -f
     class main
     user root
     group root
+    
+service fetch-swv /system/bin/fetch-swv
+    class late_start
+    oneshot
 
 # on property:gsm.sim.state=READY
 #    start diag_mdlog
