@@ -131,6 +131,7 @@ BOARD_SEPOLICY_UNION += \
        domain.te \
        file.te \
        file_contexts \
+       genfs_contexts \
        hostapd.te \
        kickstart.te \
        kcal_dev.te \
@@ -151,6 +152,7 @@ BOARD_SEPOLICY_UNION += \
        te_macros \
        thermald.te \
        vibe_dev.te \
+       vold.te \
        ueventd.te
 
 
