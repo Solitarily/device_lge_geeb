@@ -1,0 +1,1 @@
+allow mipi_dev sysfs:filesystem associate;

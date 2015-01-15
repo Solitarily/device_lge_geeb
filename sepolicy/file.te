@@ -26,4 +26,5 @@ type sysfs_mpdecision, fs_type, sysfs_type;
 type wcnss_ctrl, dev_type;
 
 type kcal_dev, file_type;
+type mipi_dev, file_type;
 type vibe_dev, file_type;

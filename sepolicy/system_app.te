@@ -1,4 +1,5 @@
 allow system_app kcal_dev:file rw_file_perms;
+allow system_app mipi_dev:file rw_file_perms;
 allow system_app vibe_dev:file rw_file_perms;
 
 # for Settings' access to KeyDisabler
