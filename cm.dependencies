@@ -1,6 +1,10 @@
 [
  {
-   "repository": "android_kernel_google_msm",
-   "target_path": "kernel/google/msm"
+   "repository": "kernel_lge_msm",
+   "target_path": "kernel/lge/msm"
+ },
+ {
+   "repository": "vendor_lge_geeb",
+   "target_path": "vendor/lge/geeb"
  }
 ]
