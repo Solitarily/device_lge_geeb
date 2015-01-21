@@ -22,7 +22,6 @@ TARGET_CPU_SMP := true
 TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := krait
-ARCH_ARM_HAVE_TLS_REGISTER := true
 
 # Krait optimizations
 TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
@@ -31,12 +30,6 @@ TARGET_KRAIT_BIONIC_PLDOFFS := 10
 TARGET_KRAIT_BIONIC_PLDTHRESH := 10
 TARGET_KRAIT_BIONIC_BBTHRESH := 64
 TARGET_KRAIT_BIONIC_PLDSIZE := 64
-
-# Compiler Optimizations
-ARCH_ARM_HIGH_OPTIMIZATION := true
-
-# Enable various prefetch optimizations
-COMMON_GLOBAL_CFLAGS += -D__ARM_USE_PLD -D__ARM_CACHE_LINE_SIZE=64
 
 TARGET_NO_BOOTLOADER := true
 
@@ -138,10 +131,11 @@ BOARD_SEPOLICY_UNION += \
        domain.te \
        file.te \
        file_contexts \
+       genfs_contexts \
        hostapd.te \
        kickstart.te \
        kcal_dev.te \
-       keystore.te \
+       mipi_dev.te \
        mediaserver.te \
        mpdecision.te \
        netmgrd.te \
@@ -158,6 +152,7 @@ BOARD_SEPOLICY_UNION += \
        te_macros \
        thermald.te \
        vibe_dev.te \
+       vold.te \
        ueventd.te
 
 

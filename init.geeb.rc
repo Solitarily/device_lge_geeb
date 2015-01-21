@@ -217,37 +217,13 @@ on post-fs-data
     # LED On/Off synchronization
     chown system system /sys/class/leds/red/device/lock
 
-    chmod 644 /sys/class/leds/button-backlight/brightness
-    chmod 646 /sys/class/leds/red/brightness
-    chmod 646 /sys/class/leds/green/brightness
-    chmod 646 /sys/class/leds/blue/brightness
+    chown root system /sys/devices/virtual/input/lge_touch/keypad_enable
+    chmod 0664 /sys/devices/virtual/input/lge_touch/keypad_enable
+    restorecon /sys/devices/virtual/input/lge_touch/keypad_enable
 
-    # Enable vibrate
-    chown system system /sys/class/timed_output/vibrator/enable
-
-    # LED devices
+# lights perms
     chown system system /sys/class/leds/led:red/brightness
-    chown system system /sys/class/leds/led:red/max_brightness
-    chown system system /sys/class/leds/led:red/trigger
-
     chown system system /sys/class/leds/led:green/brightness
-    chown system system /sys/class/leds/led:green/max_brightness
-    chown system system /sys/class/leds/led:green/trigger
-
-    chown system system /sys/class/leds/led:blue/brightness
-    chown system system /sys/class/leds/led:blue/max_brightness
-    chown system system /sys/class/leds/led:blue/trigger
-
-    chown system system /sys/class/leds/button-backlight/brightness
-    chown system system /sys/class/leds/button-backlight/max_brightness
-
-    # LED permissions
-    chown system system /sys/class/leds/led:red/brightness
-    chown system system /sys/class/leds/led:red/trigger
-    chown system system /sys/class/leds/led:green/brightness
-    chown system system /sys/class/leds/led:green/trigger
-    chown system system /sys/class/leds/button-backlight/brightness
-    chown system system /sys/class/leds/button-backlight/trigger
 
     # communicate with mpdecision and thermald
     mkdir /dev/socket/mpdecision 2770 root system
@@ -260,10 +236,22 @@ on post-fs-data
     write /sys/module/rpm_resources/enable_low_power/pxo 1
     write /sys/module/rpm_resources/enable_low_power/vdd_dig 1
     write /sys/module/rpm_resources/enable_low_power/vdd_mem 1
+    write /sys/module/pm_8x60/modes/cpu0/retention/idle_enabled 0
+    write /sys/module/pm_8x60/modes/cpu1/retention/idle_enabled 1
+    write /sys/module/pm_8x60/modes/cpu2/retention/idle_enabled 1
+    write /sys/module/pm_8x60/modes/cpu3/retention/idle_enabled 1
     write /sys/module/pm_8x60/modes/cpu0/power_collapse/suspend_enabled 1
     write /sys/module/pm_8x60/modes/cpu1/power_collapse/suspend_enabled 1
     write /sys/module/pm_8x60/modes/cpu2/power_collapse/suspend_enabled 1
     write /sys/module/pm_8x60/modes/cpu3/power_collapse/suspend_enabled 1
+    write /sys/module/pm_8x60/modes/cpu0/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/pm_8x60/modes/cpu1/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/pm_8x60/modes/cpu2/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/pm_8x60/modes/cpu3/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/pm_8x60/modes/cpu0/standalone_power_collapse/idle_enabled 1
+    write /sys/module/pm_8x60/modes/cpu1/standalone_power_collapse/idle_enabled 1
+    write /sys/module/pm_8x60/modes/cpu2/standalone_power_collapse/idle_enabled 1
+    write /sys/module/pm_8x60/modes/cpu3/standalone_power_collapse/idle_enabled 1
     write /sys/module/pm_8x60/modes/cpu0/power_collapse/idle_enabled 1
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "ondemand"
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "ondemand"
@@ -273,10 +261,48 @@ on post-fs-data
     write /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate 50000
     write /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy 1
     write /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor 4
+    write /sys/devices/system/cpu/cpufreq/ondemand/down_differential 10
+    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_multi_core 60
+    write /sys/devices/system/cpu/cpufreq/ondemand/down_differential_multi_core 3
+    write /sys/devices/system/cpu/cpufreq/ondemand/optimal_freq 918000
+    write /sys/devices/system/cpu/cpufreq/ondemand/sync_freq 1026000
+    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_any_cpu_load 80
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 384000
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 384000
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 384000
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 384000
+    write /sys/devices/system/cpu/cpu1/online 1
+    write /sys/devices/system/cpu/cpu2/online 1
+    write /sys/devices/system/cpu/cpu3/online 1
+    write /dev/cpuctl/apps/cpu.notify_on_migrate 1
+
+    # Chown cpu online files as needed for the Settings app
+    chown system system /sys/devices/system/cpu/cpu1/online
+    chown system system /sys/devices/system/cpu/cpu2/online
+    chown system system /sys/devices/system/cpu/cpu3/online
+
+    # Hardware tunables
+    chown root system /sys/class/timed_output/vibrator/amp
+    chown root system /sys/devices/platform/kcal_ctrl.0/kcal
+    chown root system /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
+    chown root system /sys/devices/platform/mipi_lgit.1537/kgamma_r
+    chown root system /sys/devices/platform/mipi_lgit.1537/kgamma_g
+    chown root system /sys/devices/platform/mipi_lgit.1537/kgamma_b
+    chown root system /sys/devices/platform/mipi_lgit.1537/kgamma_apply
+    chmod 0664 /sys/class/timed_output/vibrator/amp
+    chmod 0664 /sys/devices/platform/kcal_ctrl.0/kcal
+    chmod 0664 /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
+    chmod 0664 /sys/devices/platform/mipi_lgit.1537/kgamma_r
+    chmod 0664 /sys/devices/platform/mipi_lgit.1537/kgamma_g
+    chmod 0664 /sys/devices/platform/mipi_lgit.1537/kgamma_b
+    chmod 0664 /sys/devices/platform/mipi_lgit.1537/kgamma_apply
+    restorecon /sys/class/timed_output/vibrator/amp
+    restorecon /sys/devices/platform/kcal_ctrl.0/kcal
+    restorecon /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
+    restorecon /sys/devices/platform/mipi_lgit.1537/kgamma_r
+    restorecon /sys/devices/platform/mipi_lgit.1537/kgamma_g
+    restorecon /sys/devices/platform/mipi_lgit.1537/kgamma_b
+    restorecon /sys/devices/platform/mipi_lgit.1537/kgamma_apply
 
     # disable diag port
     rm /dev/diag

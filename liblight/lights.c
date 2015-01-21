@@ -121,17 +121,6 @@ set_light_buttons(struct light_device_t* dev,
     return err;
 }
 
-static int 
-set_light_buttons_from_backlight( int state )
-{
-    int err = 0;
-    int on = is_lit(state);
-    pthread_mutex_lock(&g_lock);
-    err = write_int(BUTTON_FILE, on?1:0);
-    pthread_mutex_unlock(&g_lock);
-    return err;
-}
-
 static int
 set_light_backlight(struct light_device_t* dev,
         struct light_state_t const* state)
@@ -141,7 +130,6 @@ set_light_backlight(struct light_device_t* dev,
     pthread_mutex_lock(&g_lock);
     err = write_int(LCD_FILE, brightness);
     pthread_mutex_unlock(&g_lock);
-    set_light_buttons_from_backlight(state);
     return err;
 }
 
@@ -359,6 +347,6 @@ struct hw_module_t HAL_MODULE_INFO_SYM = {
     .version_minor = 0,
     .id = LIGHTS_HARDWARE_MODULE_ID,
     .name = "geeb lights module",
-    .author = "Google, Inc., Solitarily",
+    .author = "Google, Inc., AOKP, solitarily",
     .methods = &lights_module_methods,
 };
