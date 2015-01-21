@@ -1,14 +1,10 @@
 [
  {
-   "repository": "kernel_msm",
+   "repository": "kernel_lge_msm",
    "target_path": "kernel/lge/msm"
  },
  {
-   "repository": "vendor_lge",
-   "target_path": "vendor/lge"
- },
- {
-   "repository": "vendor_qcom",
-   "target_path": "vendor/qcom"
+   "repository": "vendor_lge_geeb",
+   "target_path": "vendor/lge/geeb"
  }
 ]
